@@ -13,8 +13,14 @@ function App() {
   async function getChefBirthDay(recipeId: number): Promise<string | null> {
     try {
       const recipeRes = await fetch(`https://dummyjson.com/recipes/${recipeId}`)
+      if(!recipeRes.ok){
+        throw new Error("Errore HTTP")
+      }
       const recipeData = await recipeRes.json()
       const chefRes = await fetch(`https://dummyjson.com/users/${recipeData.userId}`)
+      if(!chefRes.ok){
+        throw new Error("Errore HTTP")
+      }
       const chefData = await chefRes.json()
       console.log(chefData)
       return chefData.birthDate
